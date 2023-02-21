@@ -1,115 +1,101 @@
+import 'package:flame/components.dart';
+import 'package:flame/flame.dart';
+import 'package:flame/palette.dart';
+import 'package:flame/sprite.dart';
+import 'package:flame_texturepacker/flame_texturepacker.dart';
 import 'package:flutter/material.dart';
+import 'package:flame/game.dart';
+import 'package:flutter/services.dart';
+
 
 void main() {
-  runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  Flame.device.fullScreen();
+  Flame.device.setLandscape();
+  runApp(GameWidget(
+    game: mySprite()
+    ));
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
 
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+
+
+class mySprite extends FlameGame with HasDraggables {
+  
+  //Sprite Animation Component
+
+
+  late SpriteAnimationComponent boyWalk;
+  late final JoystickComponent joystick;
+  late SpriteAnimation idle;
+  late SpriteAnimation walkforward;
+  late SpriteAnimation runBoyrun;
+  bool boyFlipped = false;  
+
+
+  Future<void> onLoad() async {
+    super.onLoad();
+    print('load assets');
+
+    final spriteSheet = await fromJSONAtlas('spriteAnimation.png', 'spriteAnimation.json');
+    final spriteSheetIdle = await fromJSONAtlas('idle.png', 'idle.json');
+    final spriteSheetRun = await fromJSONAtlas('run.png', 'run.json');
+    walkforward = SpriteAnimation.spriteList(spriteSheet, stepTime: .07);
+    idle = SpriteAnimation.spriteList(spriteSheetIdle, stepTime: .07);
+    runBoyrun = SpriteAnimation.spriteList(spriteSheetRun, stepTime: 0.04);
+    boyWalk = SpriteAnimationComponent()
+    ..animation = walkforward
+    ..position = Vector2(50, 200)
+    ..size = Vector2(100,100)
+    ..anchor = Anchor.center;
+    add(boyWalk);
+    
+    final knobPaint = BasicPalette.blue.withAlpha(200).paint();
+    final backgroundPaint = BasicPalette.blue.withAlpha(100).paint();
+    joystick = JoystickComponent(
+    knob: CircleComponent(radius: 30, paint: knobPaint),
+    background: CircleComponent (radius: 50, paint: backgroundPaint),
+    margin: const EdgeInsets.only (left: 680, bottom: 40),
     );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
+    add(joystick);
+    
   }
 
   @override
-  Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
+  void update(double dt){
+    super.update(dt);
+    final Vector2 xpos = joystick.relativeDelta;
+    xpos[1] =0;
+    if( xpos[0]<0 && !boyFlipped ) {
+      boyFlipped = true;
+      boyWalk.flipHorizontallyAroundCenter();
+      boyWalk.animation = walkforward;
+    }
+    else if ( xpos[0]>0 && boyFlipped ) {
+      boyFlipped = false;
+      boyWalk.flipHorizontallyAroundCenter();
+      boyWalk.animation = walkforward;
+    }
+    if ( xpos[0]==0 ) {
+      boyWalk.animation = idle;
+    }
+    else { 
+      boyWalk.animation = walkforward;
+    }
+
+    if(xpos[0]>0.8 || xpos[0]<-0.8){
+      boyWalk.animation = runBoyrun;
+      boyWalk.position.add(xpos * 150 *dt);
+    }
+    else{
+      boyWalk.position.add(xpos * 80 *dt);
+    }
+
+    
+    print(xpos[0]);
+     //dt = 1/60 its delta time
   }
+
 }
+
+
