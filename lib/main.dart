@@ -5,8 +5,12 @@ import 'package:flame/sprite.dart';
 import 'package:flame_texturepacker/flame_texturepacker.dart';
 import 'package:flutter/material.dart';
 import 'package:flame/game.dart';
+import 'package:flutter/services.dart';
+
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  Flame.device.fullScreen();
   Flame.device.setLandscape();
   runApp(GameWidget(
     game: mySprite()
@@ -14,7 +18,10 @@ void main() {
 }
 
 
+
+
 class mySprite extends FlameGame with HasDraggables {
+  
   //Sprite Animation Component
 
 
