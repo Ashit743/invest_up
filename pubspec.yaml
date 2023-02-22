@@ -68,6 +68,8 @@ flutter:
     - assets/idle.json
     - assets/images/run.png
     - assets/run.json
+    - assets/images/testBackground.jpg
+    - assets/images/cityBackground.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
