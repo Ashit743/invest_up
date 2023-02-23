@@ -8,14 +8,9 @@ import 'package:flame/game.dart';
 import 'package:flutter/services.dart';
 import 'package:invest_up/spite.dart';
 
-
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   Flame.device.fullScreen();
   Flame.device.setLandscape();
-  runApp(MaterialApp(home:GameWidget(
-    game: mySprite()
-    )
-    ));
+  runApp(MaterialApp(home: GameWidget(game: mySprite())));
 }
-
