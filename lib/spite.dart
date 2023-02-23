@@ -3,6 +3,7 @@ import 'package:flame/flame.dart';
 import 'package:flame/palette.dart';
 import 'package:flame/sprite.dart';
 import 'package:flame_texturepacker/flame_texturepacker.dart';
+import 'package:flame_tiled/flame_tiled.dart';
 import 'package:flutter/material.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/services.dart';
@@ -15,19 +16,32 @@ class mySprite extends FlameGame with HasDraggables {
   late SpriteAnimation idle;
   late SpriteAnimation walkforward;
   late SpriteAnimation runBoyrun;
-  late SpriteComponent background;
+  // late SpriteComponent background;
+  late double mapWidth;
+  late double mapHeight;
+
+
+
   bool boyFlipped = false;
 
   Future<void> onLoad() async {
     super.onLoad();
     print('load assets');
 
-    Sprite backgroundSprite = await loadSprite('cityBackground.png');
-    background = SpriteComponent()
-      ..sprite = backgroundSprite
-      ..size = Vector2(4096, 720)
+    final homeMap = await TiledComponent.load('map.tmx',Vector2.all(16))
       ..position = Vector2(0, -300);
-    add(background);
+    
+    add(homeMap);
+
+    mapWidth = homeMap.tileMap.map.width * 16.0;
+    mapHeight = homeMap.tileMap.map.height * 16.0;
+
+    // Sprite backgroundSprite = await loadSprite('cityBackground.png');
+    // background = SpriteComponent()
+    //   ..sprite = backgroundSprite
+    //   ..size = Vector2(4096, 720)
+    //   ..position = Vector2(0, -300);
+    // // add(background);
 
     final spriteSheet = await fromJSONAtlas('walk.png', 'walk.json');
     // final spriteSheetIdle = await fromJSONAtlas('idle.png', 'idle.json');
@@ -41,7 +55,7 @@ class mySprite extends FlameGame with HasDraggables {
     runBoyrun = SpriteAnimation.spriteList(spriteSheetRunNew, stepTime: 0.04);
     boyWalk = SpriteAnimationComponent()
       ..animation = walkforward
-      ..position = Vector2(150, 230)
+      ..position = Vector2(150, 250)
       ..size = Vector2(60, 100)
       ..debugMode = true
       ..anchor = Anchor.center;
@@ -58,7 +72,7 @@ class mySprite extends FlameGame with HasDraggables {
     add(joystick);
 
     camera.followComponent(boyWalk,
-        worldBounds: Rect.fromLTRB(0, 0, background.size.x, background.size.y));
+        worldBounds: Rect.fromLTRB(0, 0, mapWidth, mapHeight));
   }
 
   @override
@@ -90,7 +104,7 @@ class mySprite extends FlameGame with HasDraggables {
     bool moveLeft = xpos[0] < 0;
     bool moveRight = xpos[0] > 0;
     if ((moveLeft && boyWalk.x > 25) ||
-        (moveRight && boyWalk.x < background.size.x - 25)) {
+        (moveRight && boyWalk.x < mapWidth - 25)) {
       if (xpos[0] > 0.8 || xpos[0] < -0.8) {
         boyWalk.animation = runBoyrun;
         boyWalk.position.add(xpos * 150 * dt);
