@@ -7,11 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/services.dart';
 
-
 class mySprite extends FlameGame with HasDraggables {
-  
   //Sprite Animation Component
-
 
   late SpriteAnimationComponent boyWalk;
   late final JoystickComponent joystick;
@@ -19,8 +16,7 @@ class mySprite extends FlameGame with HasDraggables {
   late SpriteAnimation walkforward;
   late SpriteAnimation runBoyrun;
   late SpriteComponent background;
-  bool boyFlipped = false;  
-
+  bool boyFlipped = false;
 
   Future<void> onLoad() async {
     super.onLoad();
@@ -33,88 +29,78 @@ class mySprite extends FlameGame with HasDraggables {
       ..position = Vector2(0, -300);
     add(background);
 
-    
-    final spriteSheet = await fromJSONAtlas('spriteAnimation.png', 'spriteAnimation.json');
-    final spriteSheetIdle = await fromJSONAtlas('idle.png', 'idle.json');
-    final spriteSheetRun = await fromJSONAtlas('run.png', 'run.json');
+    final spriteSheet = await fromJSONAtlas('walk.png', 'walk.json');
+    // final spriteSheetIdle = await fromJSONAtlas('idle.png', 'idle.json');
+    // final spriteSheetRun = await fromJSONAtlas('run.png', 'run.json');
+    final spriteSheetRunNew = await fromJSONAtlas('Runner.png', 'Runner.json');
+    final SpriteSheetIdleNew =
+        await fromJSONAtlas('NewIdle.png', 'NewIdle.json');
+
     walkforward = SpriteAnimation.spriteList(spriteSheet, stepTime: .07);
-    idle = SpriteAnimation.spriteList(spriteSheetIdle, stepTime: .07);
-    runBoyrun = SpriteAnimation.spriteList(spriteSheetRun, stepTime: 0.04);
+    idle = SpriteAnimation.spriteList(SpriteSheetIdleNew, stepTime: .07);
+    runBoyrun = SpriteAnimation.spriteList(spriteSheetRunNew, stepTime: 0.04);
     boyWalk = SpriteAnimationComponent()
-    ..animation = walkforward
-    ..position = Vector2(150, 230)
-    ..size = Vector2(100,100)
-    ..anchor = Anchor.center;
+      ..animation = walkforward
+      ..position = Vector2(150, 230)
+      ..size = Vector2(60, 100)
+      ..debugMode = true
+      ..anchor = Anchor.center;
+
     add(boyWalk);
-    
+
     final knobPaint = BasicPalette.blue.withAlpha(200).paint();
     final backgroundPaint = BasicPalette.blue.withAlpha(100).paint();
     joystick = JoystickComponent(
-    knob: CircleComponent(radius: 30, paint: knobPaint),
-    background: CircleComponent (radius: 50, paint: backgroundPaint),
-    margin: const EdgeInsets.only (left: 680, bottom: 40),
+      knob: CircleComponent(radius: 30, paint: knobPaint),
+      background: CircleComponent(radius: 50, paint: backgroundPaint),
+      margin: const EdgeInsets.only(left: 680, bottom: 40),
     );
     add(joystick);
 
-
-    camera.followComponent(boyWalk,worldBounds: Rect.fromLTRB(0, 0, background.size.x, background.size.y));
-
-
-    
+    camera.followComponent(boyWalk,
+        worldBounds: Rect.fromLTRB(0, 0, background.size.x, background.size.y));
   }
 
-
-
-  @override 
-  void render(Canvas canvas){
+  @override
+  void render(Canvas canvas) {
     super.render(canvas);
   }
 
   @override
-  void update(double dt){
+  void update(double dt) {
     super.update(dt);
     final Vector2 xpos = joystick.relativeDelta;
-    xpos[1] =0;
-    if( xpos[0]<0 && !boyFlipped ) {
-
+    xpos[1] = 0;
+    if (xpos[0] < 0 && !boyFlipped) {
       boyFlipped = true;
       boyWalk.flipHorizontallyAroundCenter();
       boyWalk.animation = walkforward;
-    } else if ( xpos[0]>0 && boyFlipped ) {
+    } else if (xpos[0] > 0 && boyFlipped) {
       boyFlipped = false;
       boyWalk.flipHorizontallyAroundCenter();
       boyWalk.animation = walkforward;
+    } //walk animation
 
-    }//walk animation
-
-    if ( xpos[0]==0 ) {
+    if (xpos[0] == 0) {
       boyWalk.animation = idle;
-    } else { 
+    } else {
       boyWalk.animation = walkforward;
     }
 
-    if(xpos[0]>0.8 || xpos[0]<-0.8 ) {
+    bool moveLeft = xpos[0] < 0;
+    bool moveRight = xpos[0] > 0;
+    if ((moveLeft && boyWalk.x > 25) ||
+        (moveRight && boyWalk.x < background.size.x - 25)) {
+      if (xpos[0] > 0.8 || xpos[0] < -0.8) {
         boyWalk.animation = runBoyrun;
-        if(boyWalk.x>70 && boyWalk.x<background.size.x-200){
-          boyWalk.position.add(xpos * 150 *dt);
-        }
-        
-      
-    }else {
-      
-        boyWalk.position.add(xpos * 80 *dt);
-      
+        boyWalk.position.add(xpos * 150 * dt);
+      } else {
+        boyWalk.position.add(xpos * 80 * dt);
+      }
     }
 
-
-    print(xpos[0]);
     print(boyWalk.x);
-    print(background.size);
 
-
-
-
-     //dt = 1/60 its delta time
+    //dt = 1/60 its delta time
   }
-
 }
