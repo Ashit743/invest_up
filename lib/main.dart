@@ -6,22 +6,11 @@ import 'package:flame_texturepacker/flame_texturepacker.dart';
 import 'package:flutter/material.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/services.dart';
-import 'package:invest_up/authentication/signin_page.dart';
 import 'package:invest_up/spite.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_core/firebase_core.dart';
 
-void main() async {
-  //FIREBASE init
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-  );
+void main() {
   WidgetsFlutterBinding.ensureInitialized();
   Flame.device.fullScreen();
   Flame.device.setLandscape();
-  runApp(MaterialApp(
-      home: SignInPage(),
-    debugShowCheckedModeBanner: false,
-  ));
+  runApp(MaterialApp(home: GameWidget(game: mySprite())));
 }
