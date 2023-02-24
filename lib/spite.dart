@@ -7,8 +7,11 @@ import 'package:flame_tiled/flame_tiled.dart';
 import 'package:flutter/material.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/services.dart';
+import 'package:invest_up/actors/friends.dart';
+import 'package:tiled/tiled.dart';
+import 'package:invest_up/actors/friends.dart';
 
-class mySprite extends FlameGame with HasDraggables {
+class mySprite extends FlameGame with HasDraggables  {
   //Sprite Animation Component
 
   late SpriteAnimationComponent boyWalk;
@@ -16,7 +19,6 @@ class mySprite extends FlameGame with HasDraggables {
   late SpriteAnimation idle;
   late SpriteAnimation walkforward;
   late SpriteAnimation runBoyrun;
-  // late SpriteComponent background;
   late double mapWidth;
   late double mapHeight;
 
@@ -33,19 +35,22 @@ class mySprite extends FlameGame with HasDraggables {
     
     add(homeMap);
 
+    final obstacleGroup = homeMap.tileMap.getLayer<ObjectGroup>('Friends');
+    for (final obj in obstacleGroup!.objects){
+      print(obj.x);
+    }
+
     mapWidth = homeMap.tileMap.map.width * 16.0;
     mapHeight = homeMap.tileMap.map.height * 16.0;
 
-    // Sprite backgroundSprite = await loadSprite('cityBackground.png');
-    // background = SpriteComponent()
-    //   ..sprite = backgroundSprite
-    //   ..size = Vector2(4096, 720)
-    //   ..position = Vector2(0, -300);
-    // // add(background);
+    List<TiledObject> friendObject = homeMap.tileMap.getLayer<ObjectGroup>('Friends')!.objects;
+    print(friendObject);
+    for(var friend in friendObject){
+      print(friend.x);
+      add(Friend(friend));
+    }
 
     final spriteSheet = await fromJSONAtlas('walk.png', 'walk.json');
-    // final spriteSheetIdle = await fromJSONAtlas('idle.png', 'idle.json');
-    // final spriteSheetRun = await fromJSONAtlas('run.png', 'run.json');
     final spriteSheetRunNew = await fromJSONAtlas('Runner.png', 'Runner.json');
     final SpriteSheetIdleNew =
         await fromJSONAtlas('NewIdle.png', 'NewIdle.json');
@@ -113,8 +118,9 @@ class mySprite extends FlameGame with HasDraggables {
       }
     }
 
-    print(boyWalk.x);
 
     //dt = 1/60 its delta time
   }
 }
+
+
