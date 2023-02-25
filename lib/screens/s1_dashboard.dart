@@ -88,7 +88,7 @@ class _DashboardPageState extends State<DashboardPage> {
                               builder: (context) => LeaderBoard()));
                     },
                     child:Container(
-                      padding: const EdgeInsets.fromLTRB(20, 0, 16,0),
+                      padding: const EdgeInsets.fromLTRB(10, 0, 16,0),
                       child: Chip(
                         padding: EdgeInsets.fromLTRB(10,0,0,0),
                         elevation: 1,
