@@ -38,6 +38,7 @@ class _MyAppState extends State<LeaderBoard> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         bottomNavigationBar: BottomAppBar(
           child: Container(
