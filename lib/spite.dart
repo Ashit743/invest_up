@@ -1,3 +1,8 @@
+import 'dart:io';
+
+import 'package:cool_alert/cool_alert.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
@@ -11,6 +16,7 @@ import 'package:flutter/services.dart';
 import 'package:invest_up/actors/friends.dart';
 import 'package:invest_up/actors/mainChar.dart';
 import 'package:invest_up/dialog/dialog_box.dart';
+import 'package:invest_up/screens/s1_dashboard.dart';
 import 'package:tiled/tiled.dart';
 import 'package:invest_up/actors/friends.dart';
 import 'package:flame/geometry.dart';
@@ -47,6 +53,12 @@ class mySprite extends FlameGame with HasDraggables, HasCollisionDetection  {
   bool boyFlipped = false;
   bool dialogFlagFirstTime = true;
   bool dialogFlagNextTime = true;
+
+  BuildContext context;
+
+  mySprite(BuildContext this.context){
+    this.context = context;
+  }
 
   Future<void> onLoad() async {
     super.onLoad();
@@ -154,11 +166,21 @@ class mySprite extends FlameGame with HasDraggables, HasCollisionDetection  {
     if(charDetails[dialogCharCount][2] && boyWalk.x>charDetails[dialogCharCount][0] && boyWalk.x<charDetails[dialogCharCount][0]+50){
         dialogBox = DialogBox(text: Sentences[dialogCharCount], game: this, boyX: boyWalk.x);
         add(dialogBox);
+
         print(Sentences[dialogCharCount]);
         charDetails[dialogCharCount][2] = false;
         if(dialogCharCount < charDetails.length-1){
           dialogCharCount+=1;
         }
+        sleep(Duration(seconds:0));
+        CoolAlert.show(
+            context: context,
+            type: CoolAlertType.info,
+            text: "Lap-"+dialogCharCount.toString() ,
+            onConfirmBtnTap: () {
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => DashboardPage()));
+            });
     }
     
 
@@ -172,6 +194,7 @@ class mySprite extends FlameGame with HasDraggables, HasCollisionDetection  {
     // }
     //dt = 1/60 its delta time
   }
+
 }
 
 
