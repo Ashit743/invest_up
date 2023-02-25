@@ -98,7 +98,7 @@ class _DashboardPageState extends State<DashboardPage> {
                         label: Text(
                           "Leaderboard",
                           style:
-                              TextStyle(fontSize: 20, color: Colors.teal[700]),
+                          TextStyle(fontSize: 20, color: Colors.teal[700]),
                         ),
                       ),
                     ),
@@ -183,23 +183,23 @@ class _DashboardPageState extends State<DashboardPage> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => Stack(children: [
-                                          GameWidget(game: mySprite(context)),
-                                          Padding(
-                                            padding: const EdgeInsets.all(10.0),
-                                            child: GestureDetector(
-                                                onTap: () {
-                                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> DashboardPage()));
-                                                },
-                                                child: CircleAvatar(
-                                                  backgroundColor: Colors.indigo,
-                                                  child: Icon(
-                                                    Icons.arrow_back_outlined,
-                                                    size: 40,
-                                                    color: Colors.white,
-                                                  ),
-                                                )),
-                                          )
-                                        ])));
+                                      GameWidget(game: mySprite(context)),
+                                      Padding(
+                                        padding: const EdgeInsets.all(10.0),
+                                        child: GestureDetector(
+                                            onTap: () {
+                                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> DashboardPage()));
+                                            },
+                                            child: CircleAvatar(
+                                              backgroundColor: Colors.indigo,
+                                              child: Icon(
+                                                Icons.arrow_back_outlined,
+                                                size: 40,
+                                                color: Colors.white,
+                                              ),
+                                            )),
+                                      )
+                                    ])));
                           }
                         },
                         label: const Text(
