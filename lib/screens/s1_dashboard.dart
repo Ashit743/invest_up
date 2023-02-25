@@ -10,7 +10,7 @@ import '../image_assets.dart';
 import '../spite.dart';
 
 
-var fullname;
+var fullname = "..";
 
 
 class DashboardPage extends StatefulWidget {
