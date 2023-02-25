@@ -17,5 +17,7 @@ void main() async {
   runApp(MaterialApp(
       home: FirebaseAuth.instance.currentUser == null? SignInPage(): DashboardPage(),
     debugShowCheckedModeBanner: false,
+    theme: ThemeData(
+      fontFamily: "VT323"),
   ));
 }

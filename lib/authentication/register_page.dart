@@ -105,7 +105,7 @@ class _RegisterPageState extends State<RegisterPage> {
             child: Card(
               elevation: 0,
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(16, 10, 16, 16),
+                padding: const EdgeInsets.fromLTRB(16, 0, 16, 10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
@@ -242,7 +242,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
                     //////////////////////////////////////
                     Container(
-                      padding: const EdgeInsets.fromLTRB(0, 16, 0, 0),
+                      padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                       alignment: Alignment.center,
                       child: ElevatedButton.icon(
                         icon: Icon(Icons.person_add),

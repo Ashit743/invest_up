@@ -1,28 +1,17 @@
 import 'package:flutter/material.dart';
 
+import '../image_assets.dart';
+
+ImageAssets imageAssets = new ImageAssets();
+
 PreferredSizeWidget appBarSignIn(BuildContext context) {
   return AppBar(
-    leading: IconButton(
-      icon: Icon(
-        Icons.savings_outlined,
-        size: 30,
-      ),
-      onPressed: () {
-
-      },
-    ),
-    title: Text(
-      "Fun'D",
-      style: TextStyle(letterSpacing: 1, wordSpacing: 5),
-    ),
+    backgroundColor: Colors.white,
+    title: ImageAssets.appIcon2(),
     elevation: 0,
     centerTitle: true,
-    toolbarHeight: 75,
+    toolbarHeight: 85,
     actions: [
-      Icon(Icons.area_chart_rounded),
-      SizedBox(
-        width: MediaQuery.of(context).size.width * 0.07,
-      )
     ],
   );
 }

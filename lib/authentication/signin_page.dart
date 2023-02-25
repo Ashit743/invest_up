@@ -147,7 +147,7 @@ class _EmailPasswordFormState extends State<_EmailPasswordForm> {
                             icon: Icon(Icons.login),
                             label: Text(
                               'Sign In',
-                              style: TextStyle(fontSize: 15),
+                              style: TextStyle(fontSize: 18),
                             ),
                             onPressed: () async {
                               if (_formKey.currentState!.validate()) {
@@ -162,7 +162,7 @@ class _EmailPasswordFormState extends State<_EmailPasswordForm> {
                 ),
               )),
           SizedBox(
-            height: 20,
+            height: 5,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -184,9 +184,13 @@ class _EmailPasswordFormState extends State<_EmailPasswordForm> {
                       fontWeight: FontWeight.bold),
                 ),
               ),
+
             ],
-          )
+          ),
         ],
+      ),
+      SizedBox(
+        height: 20,
       ),
     ]);
   }
