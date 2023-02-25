@@ -8,10 +8,9 @@ import 'package:flutter/material.dart';
 import '../app_bar/appBar_dashboard.dart';
 import '../image_assets.dart';
 import '../spite.dart';
-
+import './leader_board.dart';
 
 var fullname = "..";
-
 
 class DashboardPage extends StatefulWidget {
   @override
@@ -82,7 +81,12 @@ class _DashboardPageState extends State<DashboardPage> {
                   padding: EdgeInsets.fromLTRB(
                       MediaQuery.of(context).size.width * 0.76, 10, 20, 10),
                   child: GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => LeaderBoard()));
+                    },
                     child: Chip(
                       elevation: 1,
                       backgroundColor: Colors.green[100],
@@ -125,8 +129,7 @@ class _DashboardPageState extends State<DashboardPage> {
                         padding: const EdgeInsets.only(top: 5, bottom: 20),
                         alignment: Alignment.center,
                         child: Text(
-                          "Hi, " + getFullName() +
-                              " ✌	",
+                          "Hi, " + getFullName() + " ✌	",
                           style: TextStyle(
                               fontWeight: FontWeight.w500,
                               color: Colors.black,
@@ -194,9 +197,14 @@ class _DashboardPageState extends State<DashboardPage> {
 
   String getFullName() {
     FirebaseFirestore.instance
-        .collection('db').doc('users_db').collection('user_details')
+        .collection('db')
+        .doc('users_db')
+        .collection('user_details')
         .doc(FirebaseAuth.instance.currentUser!.email.toString())
-        .get().then((value) {fullname=value['name'];});
+        .get()
+        .then((value) {
+      fullname = value['name'];
+    });
     return fullname;
   }
 }

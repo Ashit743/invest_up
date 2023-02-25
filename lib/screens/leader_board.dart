@@ -2,16 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-
-
-
-
 //Color list_item = Colors.grey[200];
 
 class LeaderBoard extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _MyAppState();
 }
+
 const Color avtar_backGround = Color(0xFF2FCB72);
 const Color avtar_backGround1 = Color(0xFF0C3329);
 const Color prof_Card = Color(0xFF196F3D);
@@ -26,7 +23,7 @@ Color gold = Color(0xFFD0B13E);
 Color silver = Color(0xFFE7E7E7);
 Color bronze = Color(0xFFA45735);
 
-class _MyAppState extends State<MyApp> {
+class _MyAppState extends State<LeaderBoard> {
   List<String> names = [
     "Ashit",
     "Faizan",
