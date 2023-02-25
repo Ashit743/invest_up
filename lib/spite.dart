@@ -116,6 +116,8 @@ class mySprite extends FlameGame with HasDraggables, HasCollisionDetection  {
       positionType= PositionType.viewport;
     add(gauge);
 
+    gauge.positionType=PositionType.viewport;
+
     final knobPaint = BasicPalette.blue.withAlpha(200).paint();
     final backgroundPaint = BasicPalette.blue.withAlpha(100).paint();
     joystick = JoystickComponent(
