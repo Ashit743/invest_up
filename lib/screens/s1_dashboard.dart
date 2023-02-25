@@ -9,7 +9,10 @@ import '../app_bar/appBar_dashboard.dart';
 import '../image_assets.dart';
 import '../spite.dart';
 
+import '/leader_board';
+
 var fullname;
+
 
 class DashboardPage extends StatefulWidget {
   @override
