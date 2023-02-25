@@ -1,4 +1,6 @@
+import 'dart:ffi';
 import 'dart:io';
+import 'dart:convert';
 
 import 'package:cool_alert/cool_alert.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -21,9 +23,9 @@ import 'package:tiled/tiled.dart';
 import 'package:invest_up/actors/friends.dart';
 import 'package:flame/geometry.dart';
 
-class mySprite extends FlameGame with HasDraggables, HasCollisionDetection  {
+class mySprite extends FlameGame with HasDraggables, HasCollisionDetection {
   //Sprite Animation Component
-
+  
   late Krishna boyWalk;
   late final JoystickComponent joystick;
   late SpriteAnimation idle;
@@ -49,7 +51,6 @@ class mySprite extends FlameGame with HasDraggables, HasCollisionDetection  {
 
 
 
-
   bool boyFlipped = false;
   bool dialogFlagFirstTime = true;
   bool dialogFlagNextTime = true;
@@ -60,11 +61,11 @@ class mySprite extends FlameGame with HasDraggables, HasCollisionDetection  {
     this.context = context;
   }
 
-  Future<void> onLoad() async {
+Future<void> onLoad() async {
     super.onLoad();
     print('load assets');
-
-    final homeMap = await TiledComponent.load('map.tmx',Vector2.all(16))
+  
+  final homeMap = await TiledComponent.load('map.tmx',Vector2.all(16))
       ..position = Vector2(0, -300);
     
     add(homeMap);
@@ -128,7 +129,7 @@ class mySprite extends FlameGame with HasDraggables, HasCollisionDetection  {
   }
 
   @override
-  void update(double dt) {
+  void update(double dt)  {
     super.update(dt);
     final Vector2 xpos = joystick.relativeDelta;
     xpos[1] = 0;
@@ -165,20 +166,18 @@ class mySprite extends FlameGame with HasDraggables, HasCollisionDetection  {
 
     if(charDetails[dialogCharCount][2] && boyWalk.x>charDetails[dialogCharCount][0] && boyWalk.x<charDetails[dialogCharCount][0]+50){
         dialogBox = DialogBox(text: Sentences[dialogCharCount], game: this, boyX: boyWalk.x);
-        add(dialogBox);
 
         print(Sentences[dialogCharCount]);
         charDetails[dialogCharCount][2] = false;
         if(dialogCharCount < charDetails.length-1){
           dialogCharCount+=1;
         }
-        sleep(Duration(seconds:0));
         CoolAlert.show(
             context: context,
             type: CoolAlertType.info,
-            text: "Lap-"+dialogCharCount.toString() ,
+            text: Sentences[dialogCharCount-1],
             onConfirmBtnTap: () {
-                Navigator.pushReplacement(context,
+                Navigator.push(context,
                     MaterialPageRoute(builder: (context) => DashboardPage()));
             });
     }

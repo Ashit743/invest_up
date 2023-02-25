@@ -179,7 +179,7 @@ class _DashboardPageState extends State<DashboardPage> {
                         ),
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {
-                            Navigator.pushReplacement(
+                            Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => Stack(children: [
