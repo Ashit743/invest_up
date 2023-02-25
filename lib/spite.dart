@@ -47,6 +47,21 @@ class mySprite extends FlameGame with HasDraggables, HasCollisionDetection {
       "So lets calculate your result, ... umm so you have done well not bad it seems, Ramesh is going to the bank he is in a bit of tension as Adani stocks fell, he is in a bit of tension, although lets go through your result"
     ];
     int dialogCharCount = 0;
+
+  late final TextComponent scoreText;
+  int _score = 0;
+  int _highscore = 0;
+
+  int get score => _score;
+  set score(int newScore) {
+    _score = newScore;
+    scoreText.text = '${scoreString(_score)}  HI ${scoreString(_highscore)}';
+  }
+
+  String scoreString(int score) => score.toString().padLeft(5, '0');
+  late final Sprite spriteImage;
+
+
   late SpriteComponent gauge;
 
 
@@ -128,6 +143,16 @@ Future<void> onLoad() async {
     );
     add(joystick);
 
+    final style = TextStyle(color: Color.fromARGB(255, 1, 56, 10),fontWeight: FontWeight.bold);
+    final regular = TextPaint(style: style);
+      add(
+      scoreText = TextComponent(
+        textRenderer: regular,
+        position: Vector2(700, 20),
+      )..positionType = PositionType.viewport,
+    );
+    score = 0;
+
     camera.followComponent(boyWalk,
         worldBounds: Rect.fromLTRB(0, 0, mapWidth, mapHeight));
   }
@@ -181,6 +206,7 @@ Future<void> onLoad() async {
         if(dialogCharCount < charDetails.length-1){
           dialogCharCount+=1;
         }
+        if(dialogCharCount!=charDetails.length-1){
         CoolAlert.show(
             context: context,
             type: CoolAlertType.info,
@@ -189,6 +215,19 @@ Future<void> onLoad() async {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => DashboardPage()));
             });
+        }
+        else{
+          CoolAlert.show(
+            context: context,
+            type: CoolAlertType.info,
+            text: Sentences[dialogCharCount],
+            onConfirmBtnTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => DashboardPage()));
+            });
+
+        }
+
     }
     
 
