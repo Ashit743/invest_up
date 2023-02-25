@@ -1,46 +1,65 @@
-import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
+import 'line_titles.dart';
+
 class LineChartWidget extends StatelessWidget {
-  final List<charts.Series> seriesList = [
-    charts.Series<Entity, String>(
-      id: 'mydata',
-      domainFn: (Entity data, _) => data.label,
-      measureFn: (Entity data, _) => data.roi,
-      data: [
-        Entity('A', 5),
-        Entity('B', 25),
-        Entity('C', 100),
-        Entity('D', 75),
-      ],
-    ),
+  final List<Color> gradientColors = [
+    const Color(0xff23b6e6),
+    const Color(0xff02d39a),
   ];
 
-  LineChartWidget(List<charts.Series> seriesList, {required bool animate});
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(title: Text('My Chart')),
-        body: Center(
-          child: LineChartWidget(seriesList, animate: true),
+  Widget build(BuildContext context) => LineChart(
+        LineChartData(
+          minX: 0,
+          maxX: 11,
+          minY: 0,
+          maxY: 6,
+          titlesData: LineTitles.getTitleData(),
+          gridData: FlGridData(
+            show: true,
+            getDrawingHorizontalLine: (value) {
+              return FlLine(
+                color: const Color(0xff37434d),
+                strokeWidth: 1,
+              );
+            },
+            drawVerticalLine: true,
+            getDrawingVerticalLine: (value) {
+              return FlLine(
+                color: const Color(0xff37434d),
+                strokeWidth: 1,
+              );
+            },
+          ),
+          borderData: FlBorderData(
+            show: true,
+            border: Border.all(color: const Color(0xff37434d), width: 1),
+          ),
+          lineBarsData: [
+            LineChartBarData(
+              spots: [
+                FlSpot(0, 5),
+                FlSpot(2.6, 2),
+                FlSpot(4.9, 5),
+                FlSpot(6.8, 2.5),
+                FlSpot(8, 4),
+                FlSpot(9.5, 3),
+                FlSpot(11, 4),
+              ],
+              isCurved: true,
+              colors: gradientColors,
+              barWidth: 5,
+              // dotData: FlDotData(show: false),
+              belowBarData: BarAreaData(
+                show: true,
+                colors: gradientColors
+                    .map((color) => color.withOpacity(0.3))
+                    .toList(),
+              ),
+            ),
+          ],
         ),
-      ),
-    );
-  }
-}
-
-// List<int> roi = [100, 50, 150, 200];
-// List<int> label = [1, 2, 3, 4];
-// List<Entity> data = [
-//   Entity(100, 1),
-//   Entity(150, 2),
-//   entity(50, 3),
-//   entity(10, 4)
-// ];
-
-class Entity {
-  String label;
-  int roi;
-  Entity(this.label, this.roi);
+      );
 }

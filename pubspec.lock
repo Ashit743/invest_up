@@ -65,6 +65,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.5"
+  equatable:
+    dependency: transitive
+    description:
+      name: equatable
+      sha256: "8007a033720c056066dd1dc20bc2934cac91e271f0408c578aa26c7731618a03"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.6"
   fake_async:
     dependency: transitive
     description:
@@ -73,6 +81,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.3.1"
+  fl_chart:
+    dependency: "direct main"
+    description:
+      name: fl_chart
+      sha256: d4694431b30b07ae60343d2321dd67f87ea208e8433676f3b059b98449d11724
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.12.3"
   flame:
     dependency: "direct main"
     description:
@@ -179,6 +195,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.8.2"
+  path_drawing:
+    dependency: transitive
+    description:
+      name: path_drawing
+      sha256: b3dd74e2210b2b71be3d3098b956dbab853ee43a86918b4bc20c9b9bd49f03f3
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.4.1+1"
+  path_parsing:
+    dependency: transitive
+    description:
+      name: path_parsing
+      sha256: "4e613c811d25f1533c0d05eb2755e21410247b8a13ac7f6cd23c0cecb2ff683d"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.4"
+  pedantic:
+    dependency: transitive
+    description:
+      name: pedantic
+      sha256: "67fc27ed9639506c856c840ccce7594d0bdcd91bc8d53d6e52359449a1d50602"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.11.1"
   sky_engine:
     dependency: transitive
     description: flutter
