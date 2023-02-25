@@ -3,6 +3,7 @@ import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/palette.dart';
 import 'package:flame/sprite.dart';
+import 'package:flame/text.dart';
 import 'package:flame_texturepacker/flame_texturepacker.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,9 @@ import 'package:invest_up/dialog/dialog_box.dart';
 import 'package:tiled/tiled.dart';
 import 'package:invest_up/actors/friends.dart';
 import 'package:flame/geometry.dart';
+import 'dart:ui' hide TextStyle;
+
+
 
 class mySprite extends FlameGame with HasDraggables, HasCollisionDetection  {
   //Sprite Animation Component
@@ -30,15 +34,27 @@ class mySprite extends FlameGame with HasDraggables, HasCollisionDetection  {
   late var charDetails = new Map();
   late var dialog = new Map();
   List<String> Sentences = [
-      "Hello I am Ramesh, Would you like to become rich like me? I hope you can only dream Hahaha... ha ..ha..ha....ha.......... ha ok I'll let you go, I think you didnt get my joke",
-      "Hello, I am Shweta, would you like to increase your assets, invest in mutual funds play this game and I'll let you know about it ",
-      "Hello I am Shrinidhi, would you like to play a game, the weather is in yellow region today, an average day in investment",
+      "Hello I am Ramesh, Would you like to become rich like me? I hope you can only dream Hahaha... ha ..ha..ha....ha......",
+      "Hello, I am Shweta, would you like to increase your assets",
+      "Hello I am Shrinidhi, would you like to play a game, the weather is in yellow region today",
       "Hola I am Varun, how about a game the bar seems to be in green.. ",
       "Namaste, Would you like to be interested in a game perhaps?",
       "howdy, like to play a game?",
-      "So lets calculate your result, ... umm so you have done well not bad it seems, Ramesh is going to the bank he is in a bit of tension as Adani stocks fell, he is in a bit of tension, although lets go through your result"
+      "So lets calculate your result, ... . . . . .  . well not bad it seems"
     ];
     int dialogCharCount = 0;
+  late final TextComponent scoreText;
+  int _score = 0;
+  int _highscore = 0;
+  int get score => _score;
+  set score(int newScore) {
+    _score = newScore;
+    scoreText.text = '${scoreString(_score)}  HI ${scoreString(_highscore)}';
+  }
+
+  String scoreString(int score) => score.toString().padLeft(5, '0');
+  late final Sprite spriteImage;
+
 
 
 
@@ -105,6 +121,16 @@ class mySprite extends FlameGame with HasDraggables, HasCollisionDetection  {
       margin: const EdgeInsets.only(left: 680, bottom: 40),
     );
     add(joystick);
+    final style = TextStyle(color: Color.fromARGB(255, 1, 56, 10),fontWeight: FontWeight.bold);
+    final regular = TextPaint(style: style);
+
+    add(
+      scoreText = TextComponent(
+        textRenderer: regular,
+        position: Vector2(20, 20),
+      )..positionType = PositionType.viewport,
+    );
+    score = 0;
 
     camera.followComponent(boyWalk,
         worldBounds: Rect.fromLTRB(0, 0, mapWidth, mapHeight));

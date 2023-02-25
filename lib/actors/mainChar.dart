@@ -5,9 +5,5 @@ class Krishna extends SpriteAnimationComponent with CollisionCallbacks{
   Future<void>onLoad() async {
     await super.onLoad();
     add(RectangleHitbox());
-    debugMode =true;
   }
-
-
-
 }
