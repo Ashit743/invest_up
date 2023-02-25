@@ -87,21 +87,21 @@ class _DashboardPageState extends State<DashboardPage> {
                           MaterialPageRoute(
                               builder: (context) => LeaderBoard()));
                     },
-                    child:Container(
-                      padding: const EdgeInsets.fromLTRB(20, 0, 16,0),
+                    child: Container(
+                      padding: const EdgeInsets.fromLTRB(10, 0, 16, 0),
                       child: Chip(
-                        padding: EdgeInsets.fromLTRB(10,0,0,0),
+                        padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
                         elevation: 1,
                         backgroundColor: Colors.green[100],
                         deleteIcon: Icon(Icons.leaderboard),
                         onDeleted: () {},
                         label: Text(
                           "Leaderboard",
-                          style: TextStyle(fontSize: 20, color: Colors.teal[700]),
+                          style:
+                          TextStyle(fontSize: 20, color: Colors.teal[700]),
                         ),
                       ),
                     ),
-
                   ),
                 ),
               ],
@@ -122,7 +122,7 @@ class _DashboardPageState extends State<DashboardPage> {
             child: Card(
               elevation: 0,
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(16, 0, 16,0),
+                padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
@@ -140,30 +140,29 @@ class _DashboardPageState extends State<DashboardPage> {
                               color: Colors.black,
                               fontSize: 30),
                         )),
-                Container(
-                  padding: EdgeInsets.fromLTRB(150, 0, 150,0),
-                  alignment: Alignment.center,
-                  child: TextFormField(
-                    controller: _amountTC,
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      labelText: 'Amount to invest',
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(50)),
-                      prefixIcon: Icon(
-                        Icons.currency_rupee_outlined,
-                        color: Colors.deepPurple,
+                    Container(
+                      padding: EdgeInsets.fromLTRB(150, 0, 150, 0),
+                      alignment: Alignment.center,
+                      child: TextFormField(
+                        controller: _amountTC,
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          labelText: 'Amount to invest',
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(50)),
+                          prefixIcon: Icon(
+                            Icons.currency_rupee_outlined,
+                            color: Colors.deepPurple,
+                          ),
+                        ),
+                        validator: (String? value) {
+                          if (value!.isEmpty) {
+                            return 'Please enter amount';
+                          }
+                          return null;
+                        },
                       ),
                     ),
-                    validator: (String? value) {
-                      if (value!.isEmpty) {
-                        return 'Please enter amount';
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-
 
                     SizedBox(
                       height: 10,
@@ -180,14 +179,30 @@ class _DashboardPageState extends State<DashboardPage> {
                         ),
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {
-                            Navigator.push(
+                            Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) =>
-                                        GameWidget(game: mySprite())));
+                                    builder: (context) => Stack(children: [
+                                      GameWidget(game: mySprite(context)),
+                                      Padding(
+                                        padding: const EdgeInsets.all(10.0),
+                                        child: GestureDetector(
+                                            onTap: () {
+                                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> DashboardPage()));
+                                            },
+                                            child: CircleAvatar(
+                                              backgroundColor: Colors.indigo,
+                                              child: Icon(
+                                                Icons.arrow_back_outlined,
+                                                size: 40,
+                                                color: Colors.white,
+                                              ),
+                                            )),
+                                      )
+                                    ])));
                           }
                         },
-                        label: Text(
+                        label: const Text(
                           'Play',
                           style: TextStyle(fontSize: 21),
                         ),

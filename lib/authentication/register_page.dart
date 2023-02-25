@@ -73,7 +73,6 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                         label: Text(
                           "No",
-                          style: TextStyle(fontFamily: "productSans"),
                         )),
                   )
                 ],
@@ -272,7 +271,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       MaterialPageRoute(builder: (context) => SignInPage()));
                 else {
                   Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => GameWidget(game: mySprite())));
+                      MaterialPageRoute(builder: (context) => DashboardPage()));
                 }
               },
               child: Text(
