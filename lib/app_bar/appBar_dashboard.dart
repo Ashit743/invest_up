@@ -10,7 +10,7 @@ PreferredSizeWidget appBarDashboard(BuildContext context) {
     backgroundColor: Colors.white,
     leading: Icon(Icons.home_filled, color: Colors.blue,),
     title: Text(
-      "Welcome to Fun'D",
+      "Welcome to",
       style: TextStyle(letterSpacing: 1, wordSpacing: 5,fontSize: 28, color: Colors.blue),
     ),
     elevation: 0,

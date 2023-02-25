@@ -35,8 +35,6 @@ class _MyAppState extends State<LeaderBoard> {
     "Somit"
   ];
   List<String> litems = ["1", "2", "3", "4", "5", "6", "7", "8"];
-  static const IconData home = IconData(0xe318, fontFamily: 'MaterialIcons');
-  IconData get arrow_back => Icons.arrow_back;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -47,7 +45,7 @@ class _MyAppState extends State<LeaderBoard> {
             child: Card(
               margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
               elevation: 0,
-              color: Colors.red,
+              color: Colors.lightGreen,
               child: Container(
                 padding: EdgeInsets.all(8.0),
                 child: Row(
@@ -98,21 +96,21 @@ class _MyAppState extends State<LeaderBoard> {
                             style: TextStyle(
                                 color: Colors.grey[200],
                                 fontWeight: FontWeight.bold)),
-                        SizedBox(width: 160),
+                        SizedBox(width: 145),
                         Text(
                           "Profile",
                           style: TextStyle(
                               color: Colors.grey[200],
                               fontWeight: FontWeight.bold),
                         ),
-                        SizedBox(width: 170),
+                        SizedBox(width: 165),
                         Text(
                           "Name",
                           style: TextStyle(
                               color: Colors.grey[200],
                               fontWeight: FontWeight.bold),
                         ),
-                        SizedBox(width: 190),
+                        SizedBox(width: 175),
                         Text(
                           "Score",
                           style: TextStyle(
@@ -128,9 +126,9 @@ class _MyAppState extends State<LeaderBoard> {
                 background: Container(
                   decoration: BoxDecoration(
                       gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: <Color>[leadbtn.withOpacity(0.5), cool])),
+                          begin: Alignment.bottomLeft,
+                          end: Alignment.bottomLeft,
+                          colors: <Color>[leadbtn.withOpacity(1.0), silver])),
                   child: Column(
                     children: [
                       Padding(
@@ -139,12 +137,12 @@ class _MyAppState extends State<LeaderBoard> {
                           "LEADERBOARD",
                           style: TextStyle(
                               fontSize: 30,
-                              color: Colors.grey[200],
+                              color: Colors.black,
                               fontWeight: FontWeight.bold),
                         ),
                       ),
                       SizedBox(
-                        height: 20,
+                        height: 0,
                       ),
                       Icon(
                         Icons.emoji_events_rounded,
@@ -179,7 +177,7 @@ class _MyAppState extends State<LeaderBoard> {
       listItem = Card(
         margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
         shadowColor: Colors.grey[200],
-        color: gold,
+        color: gold.withOpacity(0.8),
         child: Container(
           padding: EdgeInsets.all(8.0),
           child: Row(
@@ -243,7 +241,7 @@ class _MyAppState extends State<LeaderBoard> {
       listItem = Card(
         shadowColor: Colors.grey[200],
         margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
-        color: bronze,
+        color: bronze.withOpacity(0.8),
         child: Container(
           padding: EdgeInsets.all(8.0),
           child: Row(
