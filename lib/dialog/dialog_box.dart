@@ -6,8 +6,8 @@ class DialogBox extends TextBoxComponent{
   final mySprite game;
   DialogBox({required String text, required this.game, required boyX}) : super(
     text: text,
-    position: Vector2(boyX,300),
-    boxConfig: TextBoxConfig(dismissDelay: 5.0,maxWidth: game.size.x*.5,timePerChar: 0.1)) 
+    position: Vector2(boyX-50,300), //pos of dialog box
+    boxConfig: TextBoxConfig(dismissDelay: 5.0,maxWidth: game.size.x*.6,timePerChar: 0.1)) 
     {
     anchor: Anchor.bottomRight;
     }

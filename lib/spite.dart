@@ -26,7 +26,7 @@ class mySprite extends FlameGame with HasDraggables, HasCollisionDetection  {
   late double mapWidth;
   late double mapHeight;
   late DialogBox dialogBox;
-  List<int> CharNames = [0,1,2,3,4,5,5,6,7,8];
+  List<int> CharNames = [0,1,2,3,4,5,6,7,8,9];
   late var charDetails = new Map();
   late var dialog = new Map();
   List<String> Sentences = [
@@ -149,17 +149,16 @@ class mySprite extends FlameGame with HasDraggables, HasCollisionDetection  {
     }
 
 
-
-    print(dialogCharCount);
-
+    //dailog box based on condition;
 
     if(charDetails[dialogCharCount][2] && boyWalk.x>charDetails[dialogCharCount][0] && boyWalk.x<charDetails[dialogCharCount][0]+50){
         dialogBox = DialogBox(text: Sentences[dialogCharCount], game: this, boyX: boyWalk.x);
-        // add(dialogBox);
-        print(charDetails[dialogCharCount][dialogCharCount] );
+        add(dialogBox);
         print(Sentences[dialogCharCount]);
         charDetails[dialogCharCount][2] = false;
-        dialogCharCount+=1;
+        if(dialogCharCount < charDetails.length-1){
+          dialogCharCount+=1;
+        }
     }
     
 
