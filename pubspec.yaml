@@ -73,6 +73,7 @@ flutter:
     - assets/
     - assets/images/
     - assets/tiles/
+    - assets/icons/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -86,6 +87,21 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
+  fonts:
+    - family: GoogleSans
+      fonts:
+        - asset: fonts/GoogleSans-Bold.ttf
+        - asset: fonts/GoogleSans-Regular.ttf
+        - asset: fonts/GoogleSans-Medium.ttf
+
+    - family: VT323
+      fonts:
+        - asset: fonts/VT323-Regular.ttf
+
+    - family: PixelColor
+      fonts:
+        - asset: fonts/MarioWorldPixelColor.ttf
+
   # fonts:
   #   - family: Schyler
   #     fonts:

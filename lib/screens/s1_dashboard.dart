@@ -1,12 +1,18 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 
 import '../app_bar/appBar_dashboard.dart';
+import '../image_assets.dart';
 import '../spite.dart';
+
 import '/leader_board';
+
+var fullname;
+
 
 class DashboardPage extends StatefulWidget {
   @override
@@ -75,11 +81,9 @@ class _DashboardPageState extends State<DashboardPage> {
                 bodyForDashboard(context),
                 Padding(
                   padding: EdgeInsets.fromLTRB(
-                      MediaQuery.of(context).size.width * 0.74, 10, 20, 10),
+                      MediaQuery.of(context).size.width * 0.76, 10, 20, 10),
                   child: GestureDetector(
-                    onTap: () {
-                      LeaderBoard();
-                    },
+                    onTap: () {},
                     child: Chip(
                       elevation: 1,
                       backgroundColor: Colors.green[100],
@@ -101,15 +105,16 @@ class _DashboardPageState extends State<DashboardPage> {
   Widget bodyForDashboard(context) {
     return ListView(children: [
       SizedBox(
-        height: MediaQuery.of(context).size.height * 0.01,
+        height: MediaQuery.of(context).size.height * 0.015,
       ),
+      ImageAssets.appIcon(),
       Column(children: [
         Form(
             key: _formKey,
             child: Card(
               elevation: 0,
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(16, 10, 16, 16),
+                padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
@@ -118,10 +123,10 @@ class _DashboardPageState extends State<DashboardPage> {
                     ),
 
                     Container(
-                        padding: const EdgeInsets.only(top: 20, bottom: 20),
+                        padding: const EdgeInsets.only(top: 5, bottom: 20),
                         alignment: Alignment.center,
                         child: Text(
-                          "Hi, ${FirebaseAuth.instance.currentUser?.email}" +
+                          "Hi, " + getFullName() +
                               " ✌	",
                           style: TextStyle(
                               fontWeight: FontWeight.w500,
@@ -150,7 +155,7 @@ class _DashboardPageState extends State<DashboardPage> {
                     ),
 
                     SizedBox(
-                      height: 15,
+                      height: 10,
                     ),
 
                     //////////////////////////////////////
@@ -158,7 +163,10 @@ class _DashboardPageState extends State<DashboardPage> {
                       padding: const EdgeInsets.fromLTRB(0, 16, 0, 0),
                       alignment: Alignment.center,
                       child: ElevatedButton.icon(
-                        icon: Icon(Icons.play_circle),
+                        icon: Icon(
+                          Icons.play_circle,
+                          size: 35,
+                        ),
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {
                             Navigator.push(
@@ -168,7 +176,10 @@ class _DashboardPageState extends State<DashboardPage> {
                                         GameWidget(game: mySprite())));
                           }
                         },
-                        label: Text('Play'),
+                        label: Text(
+                          'Play',
+                          style: TextStyle(fontSize: 21),
+                        ),
                       ),
                     ),
                   ],
@@ -180,5 +191,13 @@ class _DashboardPageState extends State<DashboardPage> {
         )
       ]),
     ]);
+  }
+
+  String getFullName() {
+    FirebaseFirestore.instance
+        .collection('db').doc('users_db').collection('user_details')
+        .doc(FirebaseAuth.instance.currentUser!.email.toString())
+        .get().then((value) {fullname=value['name'];});
+    return fullname;
   }
 }
