@@ -4,7 +4,7 @@ PreferredSizeWidget appBarSignIn(BuildContext context) {
   return AppBar(
     leading: IconButton(
       icon: Icon(
-        Icons.arrow_back,
+        Icons.savings_outlined,
         size: 30,
       ),
       onPressed: () {
@@ -12,14 +12,14 @@ PreferredSizeWidget appBarSignIn(BuildContext context) {
       },
     ),
     title: Text(
-      "Sign In",
+      "Fun'D",
       style: TextStyle(letterSpacing: 1, wordSpacing: 5),
     ),
-    elevation: 5,
+    elevation: 0,
     centerTitle: true,
     toolbarHeight: 75,
     actions: [
-      Icon(Icons.login),
+      Icon(Icons.area_chart_rounded),
       SizedBox(
         width: MediaQuery.of(context).size.width * 0.07,
       )

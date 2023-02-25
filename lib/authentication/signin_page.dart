@@ -3,6 +3,7 @@ import 'package:invest_up/app_bar/appBar_signin.dart';
 import 'package:invest_up/authentication/register_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:invest_up/screens/s1_dashboard.dart';
 import 'package:path_provider/path_provider.dart';
 import '../spite.dart';
 
@@ -66,6 +67,9 @@ class _EmailPasswordFormState extends State<_EmailPasswordForm> {
       ),
       Column(
         children: [
+          SizedBox(
+            height: 10,
+          ),
           Form(
               key: _formKey,
               child: Container(
@@ -213,7 +217,7 @@ class _EmailPasswordFormState extends State<_EmailPasswordForm> {
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-              builder: (context) => GameWidget(game: mySprite())));
+              builder: (context) => DashboardPage()));
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../authentication/signin_page.dart';
+
 PreferredSizeWidget appBarSignUp(BuildContext context) {
   return AppBar(
     leading: IconButton(
@@ -8,6 +10,8 @@ PreferredSizeWidget appBarSignUp(BuildContext context) {
         size: 30,
       ),
       onPressed: () {
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => SignInPage()));
       },
     ),
     title: Text(

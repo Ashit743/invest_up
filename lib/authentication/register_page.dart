@@ -6,6 +6,7 @@ import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:invest_up/authentication/signin_page.dart';
+import 'package:invest_up/screens/s1_dashboard.dart';
 
 import '../app_bar/appBar_signup.dart';
 import '../spite.dart';
@@ -302,8 +303,8 @@ class _RegisterPageState extends State<RegisterPage> {
   Future<void> addUser() {
     // Call the user's CollectionReference to add a new user
     return db
-        .doc("route3")
-        .collection("users")
+        .doc("users_db")
+        .collection("user_details")
         .doc(FirebaseAuth.instance.currentUser!.email.toString())
         .set({
           'email': _emailController.text,
@@ -343,7 +344,7 @@ class _RegisterPageState extends State<RegisterPage> {
             onConfirmBtnTap: () {
               if (FirebaseAuth.instance.currentUser != null)
                 Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => GameWidget(game: mySprite())));
+                    MaterialPageRoute(builder: (context) => DashboardPage()));
               else
                 Navigator.pushReplacement(context,
                     MaterialPageRoute(builder: (context) => SignInPage()));
