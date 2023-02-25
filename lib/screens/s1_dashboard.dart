@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 import '../app_bar/appBar_dashboard.dart';
 import '../spite.dart';
-
+import '/leader_board';
 
 class DashboardPage extends StatefulWidget {
   @override
@@ -72,17 +72,23 @@ class _DashboardPageState extends State<DashboardPage> {
             backgroundColor: Colors.white,
             body: Stack(
               children: [
-
                 bodyForDashboard(context),
                 Padding(
-                  padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.74, 10, 20, 10),
-                  child: GestureDetector(onTap: () {},
+                  padding: EdgeInsets.fromLTRB(
+                      MediaQuery.of(context).size.width * 0.74, 10, 20, 10),
+                  child: GestureDetector(
+                    onTap: () {
+                      LeaderBoard();
+                    },
                     child: Chip(
                       elevation: 1,
                       backgroundColor: Colors.green[100],
                       deleteIcon: Icon(Icons.leaderboard),
-                      onDeleted: (){},
-                      label: Text("Leaderboard", style: TextStyle(fontSize: 20, color: Colors.teal[700]),),
+                      onDeleted: () {},
+                      label: Text(
+                        "Leaderboard",
+                        style: TextStyle(fontSize: 20, color: Colors.teal[700]),
+                      ),
                     ),
                   ),
                 ),
@@ -112,12 +118,16 @@ class _DashboardPageState extends State<DashboardPage> {
                     ),
 
                     Container(
-                      padding: const EdgeInsets.only(top: 20, bottom: 20),
-                      alignment: Alignment.center,
-                      child: Text("Hi, ${FirebaseAuth.instance.currentUser?.email}" + " ✌	",
-                        style: TextStyle(fontWeight: FontWeight.w500, color: Colors.black, fontSize: 30),
-                      )
-                    ),
+                        padding: const EdgeInsets.only(top: 20, bottom: 20),
+                        alignment: Alignment.center,
+                        child: Text(
+                          "Hi, ${FirebaseAuth.instance.currentUser?.email}" +
+                              " ✌	",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black,
+                              fontSize: 30),
+                        )),
 
                     TextFormField(
                       controller: _amountTC,
@@ -151,8 +161,11 @@ class _DashboardPageState extends State<DashboardPage> {
                         icon: Icon(Icons.play_circle),
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) => GameWidget(game: mySprite())));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        GameWidget(game: mySprite())));
                           }
                         },
                         label: Text('Play'),
