@@ -47,8 +47,7 @@ class mySprite extends FlameGame with HasDraggables, HasCollisionDetection {
       "So lets calculate your result, ... umm so you have done well not bad it seems, Ramesh is going to the bank he is in a bit of tension as Adani stocks fell, he is in a bit of tension, although lets go through your result"
     ];
     int dialogCharCount = 0;
-
-
+  late SpriteComponent gauge;
 
 
   bool boyFlipped = false;
@@ -109,6 +108,16 @@ Future<void> onLoad() async {
       ..anchor = Anchor.center;
 
     add(boyWalk);
+
+    Sprite gaugeSprite = await loadSprite('red-guage.png');
+    gauge = SpriteComponent()
+      ..sprite = gaugeSprite
+      ..size = Vector2(150, 120)
+      ..position = Vector2(10, 280);
+      positionType= PositionType.viewport;
+    add(gauge);
+
+    gauge.positionType=PositionType.viewport;
 
     final knobPaint = BasicPalette.blue.withAlpha(200).paint();
     final backgroundPaint = BasicPalette.blue.withAlpha(100).paint();
