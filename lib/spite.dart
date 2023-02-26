@@ -20,7 +20,7 @@ import 'package:invest_up/actors/mainChar.dart';
 import 'package:invest_up/dialog/dialog_box.dart';
 import 'package:invest_up/screens/s1_dashboard.dart';
 import 'package:tiled/tiled.dart';
-import 'package:invest_up/actors/friends.dart';
+import 'package:invest_up/screens/leader_board.dart';
 import 'package:flame/geometry.dart';
 import 'dart:math';
 import 'package:collection/collection.dart';
@@ -281,7 +281,7 @@ Future<void> onLoad() async {
             text: Sentences[dialogCharCount-1],
             onConfirmBtnTap: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => DashboardPage()));
+                    MaterialPageRoute(builder: (context) => LeaderBoard()));
             });
         }
         else{
