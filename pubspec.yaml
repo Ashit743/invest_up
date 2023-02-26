@@ -50,6 +50,7 @@ dependencies:
   flutter_native_splash: any
 
 dev_dependencies:
+  flutter_launcher_icons: any
   flutter_test:
     sdk: flutter
 
