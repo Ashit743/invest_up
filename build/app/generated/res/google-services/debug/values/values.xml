@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_web_client_id" translatable="false">576897135110-pg3ugmm565vt64nstltges7uf6lnnjr5.apps.googleusercontent.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">576897135110</string>
+    <string name="google_api_key" translatable="false">AIzaSyDKJw912cg2HbCl8lAVkzr9y-vm6F0uJ_U</string>
+    <string name="google_app_id" translatable="false">1:576897135110:android:c1fe9f941c7446a6a50987</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyDKJw912cg2HbCl8lAVkzr9y-vm6F0uJ_U</string>
+    <string name="google_storage_bucket" translatable="false">mutualfun-d.appspot.com</string>
+    <string name="project_id" translatable="false">mutualfun-d</string>
+</resources>

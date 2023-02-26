@@ -1,0 +1,19 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.example.invest_up.app-mergeDebugResources-14:/values-v16/values-v16.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\saila\\.gradle\\caches\\transforms-3\\1141b72fb8be4e566e7814849b1aa3a2\\transformed\\core-1.6.0\\res\\values-v16\\values-v16.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "65",
+                        "endOffsets": "116"
+                    }
+                }
+            ]
+        }
+    ]
+}
