@@ -48,8 +48,15 @@ dependencies:
   tiled: ^0.10.1
 
 dev_dependencies:
+  flutter_launcher_icons: any
   flutter_test:
     sdk: flutter
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icons/logo-no-background.png"
+  min_sdk_android: 21
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
