@@ -22,8 +22,12 @@ import 'package:invest_up/screens/s1_dashboard.dart';
 import 'package:tiled/tiled.dart';
 import 'package:invest_up/actors/friends.dart';
 import 'package:flame/geometry.dart';
+import 'dart:math';
+import 'package:collection/collection.dart';
 
 class mySprite extends FlameGame with HasDraggables, HasCollisionDetection {
+
+  
   //Sprite Animation Component
   
   late Krishna boyWalk;
@@ -34,19 +38,35 @@ class mySprite extends FlameGame with HasDraggables, HasCollisionDetection {
   late double mapWidth;
   late double mapHeight;
   late DialogBox dialogBox;
+  late double roi;
   List<int> CharNames = [0,1,2,3,4,5,6,7,8,9];
   late var charDetails = new Map();
   late var dialog = new Map();
   List<String> Sentences = [
-      "Hello I am Ramesh, Would you like to become rich like me? I hope you can only dream Hahaha... ha ..ha..ha....ha.......... ha ok I'll let you go, I think you didnt get my joke",
+      "Hello I am Ramesh, Would you like to become rich like me?",
       "Hello, I am Shweta, would you like to increase your assets, invest in mutual funds play this game and I'll let you know about it ",
       "Hello I am Shrinidhi, would you like to play a game, the weather is in yellow region today, an average day in investment",
       "Hola I am Varun, how about a game the bar seems to be in green.. ",
       "Namaste, Would you like to be interested in a game perhaps?",
       "howdy, like to play a game?",
-      "So lets calculate your result, ... umm so you have done well not bad it seems, Ramesh is going to the bank he is in a bit of tension as Adani stocks fell, he is in a bit of tension, although lets go through your result"
+      "So lets calculate your result, ... umm so you have done well not bad it seems,your ROI is "
     ];
     int dialogCharCount = 0;
+
+  late final TextComponent scoreText;
+  int _score = 0;
+  int _highscore = 0;
+
+  int get score => _score;
+  set score(int newScore) {
+    _score = newScore;
+    scoreText.text = '${scoreString(_score)}  HI ${scoreString(_highscore)}';
+  }
+
+  String scoreString(int score) => score.toString().padLeft(5, '0');
+  late final Sprite spriteImage;
+
+
   late SpriteComponent gauge;
 
 
@@ -63,6 +83,71 @@ class mySprite extends FlameGame with HasDraggables, HasCollisionDetection {
 Future<void> onLoad() async {
     super.onLoad();
     print('load assets');
+
+    int maxAmount = 2000;
+    int salesDay = 14;
+  	int normSIPAmount = maxAmount~/2;
+		List<int> perUnitValue = [];
+  	List<int> smartAmount = [];
+  	List<double> normalUnits=[];
+  	List<double> smartUnits=[];
+  	for(var i=0;i<5;i++){
+      var intValue = Random().nextInt(4) + 10;
+      perUnitValue.add(intValue);
+    }
+  	List<String> perMonthStatus = [];
+  	for(var i=0;i<5;i++){
+      normalUnits.add(normSIPAmount/perUnitValue[i]);
+       if(perUnitValue[i]==10){
+         smartAmount.add(maxAmount);
+         perMonthStatus.add("RED");
+       }
+      else if(perUnitValue[i]>=11 && perUnitValue[i]<=12){
+         smartAmount.add(maxAmount~/2);
+        perMonthStatus.add("YELLOW");
+      }
+      else{
+        smartAmount.add(maxAmount~/4);
+        perMonthStatus.add("GREEN");
+      }
+     }
+  
+    for(var i=0;i<5;i++){
+        smartUnits.add(smartAmount[i]/perUnitValue[i]);
+    }
+
+
+
+  var smartAmountSum =smartAmount.sum;
+  var smartUnitsSum = smartUnits.sum;
+  var normAmountSum=normSIPAmount*5;
+  final double salesDaySale = (smartUnitsSum*salesDay).toDouble();
+
+  print(smartAmount);
+  print(perUnitValue);
+  print(smartAmountSum);
+  print(smartUnits);
+  print(salesDaySale);
+
+
+  final double roi = ((salesDaySale /smartAmountSum).toDouble()-1 )*100;
+  Sentences[6]+=roi.toString();
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   
   final homeMap = await TiledComponent.load('map.tmx',Vector2.all(16))
       ..position = Vector2(0, -300);
@@ -128,6 +213,16 @@ Future<void> onLoad() async {
     );
     add(joystick);
 
+    final style = TextStyle(color: Color.fromARGB(255, 1, 56, 10),fontWeight: FontWeight.bold);
+    final regular = TextPaint(style: style);
+      add(
+      scoreText = TextComponent(
+        textRenderer: regular,
+        position: Vector2(700, 20),
+      )..positionType = PositionType.viewport,
+    );
+    score = 0;
+
     camera.followComponent(boyWalk,
         worldBounds: Rect.fromLTRB(0, 0, mapWidth, mapHeight));
   }
@@ -180,8 +275,7 @@ Future<void> onLoad() async {
         charDetails[dialogCharCount][2] = false;
         if(dialogCharCount < charDetails.length-1){
           dialogCharCount+=1;
-        }
-        CoolAlert.show(
+          CoolAlert.show(
             context: context,
             type: CoolAlertType.info,
             text: Sentences[dialogCharCount-1],
@@ -189,20 +283,25 @@ Future<void> onLoad() async {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => DashboardPage()));
             });
+        }
+        else{
+          CoolAlert.show(
+            context: context,
+            type: CoolAlertType.info,
+            text: Sentences[dialogCharCount] ,
+            onConfirmBtnTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => DashboardPage()));
+            });
+
+        }
+
     }
     
-
-
-
-
-    // else if(dialogFlagNextTime && boyWalk.x>545 && boyWalk.x<575){
-    //     dialogBox = DialogBox(text: 'Hi, I am Some random ass dude , please helpo me', game: this, boyX: boyWalk.x);
-    //     add(dialogBox);
-    //     dialogFlagFirstTime = false;
-    // }
-    //dt = 1/60 its delta time
   }
 
 }
+
+
 
 
