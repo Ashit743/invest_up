@@ -1,14 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-
+import 'package:invest_up/screens/s1_dashboard.dart';
 //Color list_item = Colors.grey[200];
-
 class LeaderBoard extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _MyAppState();
 }
-
 const Color avtar_backGround = Color(0xFF2FCB72);
 const Color avtar_backGround1 = Color(0xFF0C3329);
 const Color prof_Card = Color(0xFF196F3D);
@@ -22,7 +22,6 @@ Color leadbtn = Color(0xFF196F3D);
 Color gold = Color(0xFFD0B13E);
 Color silver = Color(0xFFE7E7E7);
 Color bronze = Color(0xFFA45735);
-
 class _MyAppState extends State<LeaderBoard> {
   List<String> names = [
     "Ashit",
@@ -52,21 +51,21 @@ class _MyAppState extends State<LeaderBoard> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Text("2",
+                    Text("9",
                         style: TextStyle(
                             color: Colors.black, fontWeight: FontWeight.bold)),
                     CircleAvatar(
                       backgroundImage:
-                          AssetImage("assets/images/emoticon_winner.png"),
+                      AssetImage("assets/images/emoji-other.png"),
                       foregroundColor: Colors.green,
                     ),
                     Text(
-                      "Faizan",
+                      getFullName(),
                       style: TextStyle(
                           color: Colors.black, fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      "800",
+                      "0",
                       style: TextStyle(
                           color: Colors.black, fontWeight: FontWeight.bold),
                     )
@@ -158,22 +157,19 @@ class _MyAppState extends State<LeaderBoard> {
             ),
             SliverList(
                 delegate: SliverChildBuilderDelegate(
-              (BuildContext context, int index) => buildList(context, index),
-              childCount: litems.length,
-            ))
+                      (BuildContext context, int index) => buildList(context, index),
+                  childCount: litems.length,
+                ))
           ],
         ),
       ),
     );
   }
-
   Widget buildList(BuildContext txt, int index) {
     int ind = index + 1;
     final pos = litems[index];
     final name = names[index];
-
     Widget listItem;
-
     if (ind == 1) {
       listItem = Card(
         margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
@@ -189,18 +185,18 @@ class _MyAppState extends State<LeaderBoard> {
                       color: Colors.black, fontWeight: FontWeight.bold)),
               CircleAvatar(
                 backgroundImage:
-                    AssetImage("assets/images/emoticon_winner.png"),
+                AssetImage("assets/images/emoticon_winner.png"),
                 foregroundColor: Colors.green,
               ),
               Text(
                 name,
                 style:
-                    TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
               ),
               Text(
-                "Score",
+                "250",
                 style:
-                    TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
               )
             ],
           ),
@@ -221,18 +217,18 @@ class _MyAppState extends State<LeaderBoard> {
                       color: Colors.black, fontWeight: FontWeight.bold)),
               CircleAvatar(
                 backgroundImage:
-                    AssetImage("assets/images/emoticon_winner.png"),
+                AssetImage("assets/images/emoticon_winner.png"),
                 foregroundColor: Colors.green,
               ),
               Text(
                 name,
                 style:
-                    TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
               ),
               Text(
-                "Score",
+                "200",
                 style:
-                    TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
               )
             ],
           ),
@@ -253,18 +249,18 @@ class _MyAppState extends State<LeaderBoard> {
                       color: Colors.black, fontWeight: FontWeight.bold)),
               CircleAvatar(
                 backgroundImage:
-                    AssetImage("assets/images/emoticon_winner.png"),
+                AssetImage("assets/images/emoticon_winner.png"),
                 foregroundColor: Colors.green,
               ),
               Text(
                 name,
                 style:
-                    TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
               ),
               Text(
-                "Score",
+                "150",
                 style:
-                    TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
               )
             ],
           ),
@@ -290,19 +286,18 @@ class _MyAppState extends State<LeaderBoard> {
               Text(
                 name,
                 style:
-                    TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
               ),
               Text(
-                "Score",
+                "0",
                 style:
-                    TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
               )
             ],
           ),
         ),
       );
     }
-
     return Stack(
       children: [
         Container(
@@ -311,5 +306,17 @@ class _MyAppState extends State<LeaderBoard> {
         ),
       ],
     );
+  }
+  String getFullName() {
+    FirebaseFirestore.instance
+        .collection('db')
+        .doc('users_db')
+        .collection('user_details')
+        .doc(FirebaseAuth.instance.currentUser!.email.toString())
+        .get()
+        .then((value) {
+      fullname = value['name'];
+    });
+    return fullname;
   }
 }
